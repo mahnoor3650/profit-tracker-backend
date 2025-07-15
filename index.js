@@ -7,15 +7,19 @@ import investmentRoutes from "./routes/investment.js";
 import profitRoutes from "./routes/profits.js";
 
 dotenv.config();
+const port = process.env.PORT || 5000;
 connectDB();
-
+app.use(express.json());
 const app = express();
      app.use(
        cors()
      );
 
-app.use(express.json());
+
 app.use("/api/investment", investmentRoutes);
 app.use("/api/profits", profitRoutes);
+app.get("/", (req, res) => {
+  res.send("API working");
+});
 
-export default app;
+app.listen(port, () => console.log("Server started ", port));
