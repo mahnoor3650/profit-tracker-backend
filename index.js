@@ -11,12 +11,7 @@ connectDB();
 
 const app = express();
      app.use(
-       cors({
-         origin: [
-           "https://profit-tracker-frontend-blue.vercel.app",
-           "http://localhost:5173",
-         ],
-       })
+       cors()
      );
 app.use(express.json());
 
