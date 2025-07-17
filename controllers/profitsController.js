@@ -33,3 +33,22 @@ export const deleteProfit = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const deleteLatestRecord = async (req, res) => {
+  try {
+    const { type } = req.params;
+    const latestRecord = await ProfitRecord.findOne({ type }).sort({ createdAt: -1 });
+    
+    if (!latestRecord) {
+      return res.status(404).json({ error: "No record found to delete" });
+    }
+    
+    await ProfitRecord.findByIdAndDelete(latestRecord._id);
+    res.json({ 
+      message: "Latest record deleted successfully",
+      deletedRecord: latestRecord
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
